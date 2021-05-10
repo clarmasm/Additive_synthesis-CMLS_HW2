@@ -61,18 +61,36 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 
-    void set_gain(float val);
-    void set_freq(float val);
+    void setGainMIDI(float val);
+    void setGain1(float val);
+    void setFreq1(float val);
+    void setGain2(float val);
+    void setFreq2(float val);
+    void setGain3(float val);
+    void setFreq3(float val);
     
 private:
     //==============================================================================
     
-    float phase;
-    float gain;
-    float gain_now;
+    float phaseMIDI;
+    float phase1;
+    float phase2;
+    float phase3;
+    
+    float gainMIDI;
+    float gainMIDINow;
+    float gain1;
+    float gainNow1;
+    float gain2;
+    float gainNow2;
+    float gain3;
+    float gainNow3;
+    
     float car_freq;
     
-    int freq;
+    int freq1;
+    int freq2;
+    int freq3;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FM_SynthAudioProcessor)
 };

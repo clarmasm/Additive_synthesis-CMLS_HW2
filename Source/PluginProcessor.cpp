@@ -95,11 +95,22 @@ void FM_SynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    gain = 1.0; 
-    gain_now = gain;
-    phase = 2.0;
+    gainMIDI = 0; 
+    gainMIDINow = 0;
+    gain1 = 0;
+    gain2 = 0;
+    gain3 = 0;
+    gainNow1 = 0;
+    gainNow2 = 0;
+    gainNow3 = 0;
+    phaseMIDI = 0.0;
+    phase1 = 0.0;
+    phase2 = 0.0;
+    phase3 = 0.0;
     car_freq = 0.0;
-    freq = 0.0;
+    freq1 = 0.0;
+    freq2 = 0.0;
+    freq3 = 0.0;
     
 }
 
@@ -168,11 +179,17 @@ void FM_SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     int time;
     for (juce::MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);){
         if (m.isNoteOn()) {
-            gain_now = gain;
+            gainMIDINow = gainMIDI;
+            gainNow1 = gain1;
+            gainNow2 = gain2;
+            gainNow3 = gain3;
             car_freq = m.getMidiNoteInHertz(m.getNoteNumber());
         }
         else if (m.isNoteOff()) {
-            gain_now = 0;
+            gainMIDINow = 0;
+            gainNow1 = 0;
+            gainNow2 = 0;
+            gainNow3 = 0;
         }
         else if (m.isAftertouch()) {
         }
@@ -183,15 +200,30 @@ void FM_SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     float* channelDataL = buffer.getWritePointer(0);
     float* channelDataR = buffer.getWritePointer(1);
     int numSamples = buffer.getNumSamples();
+    float sinMIDI;
+    float sin1;
+    float sin2;
+    float sin3;
     
     for (int i = 0; i < numSamples; ++i) {
-        channelDataL[i] = gain_now * (float) sin ((double) phase);
+        sinMIDI = gainMIDINow * (float) sin ((double) phaseMIDI);
+        sin1 = gainNow1 * (float) sin ((double) phase1);
+        sin2 = gainNow2 * (float) sin ((double) phase2);
+        sin3 = gainNow3 * (float) sin ((double) phase3);
+        channelDataL[i] = sinMIDI + sin1 + sin2 + sin3;
         channelDataR[i] = channelDataL[i];
         
         
         
-        phase += (float) ( M_PI * 2. *( ((double) (car_freq + freq) / (double) SAMPLE_RATE)));
-        if( phase > M_PI * 2. ) phase -= M_PI * 2.;
+        phaseMIDI += (float) ( M_PI * 2. *( ((double) (car_freq) / (double) SAMPLE_RATE)));
+        if( phaseMIDI > M_PI * 2. ) phaseMIDI -= M_PI * 2.;
+        phase1 += (float) ( M_PI * 2. *( ((double) (car_freq + freq1) / (double) SAMPLE_RATE)));
+        if( phase1 > M_PI * 2. ) phase1 -= M_PI * 2.;
+        phase2 += (float) ( M_PI * 2. *( ((double) (car_freq + freq2) / (double) SAMPLE_RATE)));
+        if( phase2 > M_PI * 2. ) phase2 -= M_PI * 2.;
+        phase3 += (float) ( M_PI * 2. *( ((double) (car_freq + freq3) / (double) SAMPLE_RATE)));
+        if( phase3 > M_PI * 2. ) phase3 -= M_PI * 2.;
+        
     }
     
 }
@@ -230,12 +262,38 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 
 
-void FM_SynthAudioProcessor::set_gain(float val)
+void FM_SynthAudioProcessor::setGainMIDI(float val)
 {
-    gain = val;
+    gainMIDI = val;
 }
 
-void FM_SynthAudioProcessor::set_freq(float val)
+void FM_SynthAudioProcessor::setGain1(float val)
 {
-    freq = val;
+    gain1 = val;
 }
+
+void FM_SynthAudioProcessor::setFreq1(float val)
+{
+    freq1 = val;
+}
+
+void FM_SynthAudioProcessor::setGain2(float val)
+{
+    gain2 = val;
+}
+
+void FM_SynthAudioProcessor::setFreq2(float val)
+{
+    freq2 = val;
+}
+
+void FM_SynthAudioProcessor::setGain3(float val)
+{
+    gain3 = val;
+}
+
+void FM_SynthAudioProcessor::setFreq3(float val)
+{
+    freq3 = val;
+}
+

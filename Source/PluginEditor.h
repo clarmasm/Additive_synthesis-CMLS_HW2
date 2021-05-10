@@ -30,11 +30,27 @@ private:
     FM_SynthAudioProcessor& audioProcessor;
     
     
-    juce::Slider gainSlider;
-    juce::Label gainLabel;
+    juce::Slider gainMIDISlider;
+    juce::Label gainMIDILabel;
     
-    juce::Slider freqSlider;
-    juce::Label freqLabel;
+    juce::Slider gain1Slider;
+    juce::Label gain1Label;
+    
+    juce::Slider freq1Slider;
+    juce::Label freq1Label;
+    
+    juce::Slider gain2Slider;
+    juce::Label gain2Label;
+    
+    juce::Slider freq2Slider;
+    juce::Label freq2Label;
+    
+    juce::Slider gain3Slider;
+    juce::Label gain3Label;
+    
+    juce::Slider freq3Slider;
+    juce::Label freq3Label;
+    
     
     void sliderValueChanged( juce::Slider * slider) override;
 
