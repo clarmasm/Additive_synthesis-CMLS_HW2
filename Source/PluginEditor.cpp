@@ -10,15 +10,15 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcessor& p)
+Add_synthAudioProcessorEditor::Add_synthAudioProcessorEditor (Add_synthAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (600, 800);
+    setSize (500, 800);
     
     
-    gainMIDILabel.setText("Gain MIDI Index", juce::dontSendNotification);
+    gainMIDILabel.setText("MIDI Oscillator Gain", juce::dontSendNotification);
     
     gainMIDISlider.setRange(0.0,1.0,0.1);
     gainMIDISlider.setSliderStyle(juce::Slider::Rotary);
@@ -28,7 +28,7 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(gainMIDISlider);
     addAndMakeVisible(gainMIDILabel);
     
-    gain1Label.setText("Gain 1 Index", juce::dontSendNotification);
+    gain1Label.setText("Oscillator 1 Gain", juce::dontSendNotification);
     
     gain1Slider.setRange(0.0,1.0,0.1);
     gain1Slider.setSliderStyle(juce::Slider::Rotary);
@@ -38,10 +38,10 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(gain1Slider);
     addAndMakeVisible(gain1Label);
     
-    freq1Label.setText("Freq 1 Index", juce::dontSendNotification);
+    freq1Label.setText("Osc 1 Freq Offset", juce::dontSendNotification);
     
-    freq1Slider.setRange(-250,250,1);
-    freq1Slider.setValue(0);
+    freq1Slider.setRange(-1.0,1.0,0.01);
+    freq1Slider.setValue(0.0);
     freq1Slider.setSliderStyle(juce::Slider::Rotary);
     freq1Slider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
     freq1Slider.addListener(this);
@@ -49,7 +49,7 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(freq1Slider);
     addAndMakeVisible(freq1Label);
     
-    gain2Label.setText("Gain 2 Index", juce::dontSendNotification);
+    gain2Label.setText("Oscillator 2 Gain", juce::dontSendNotification);
     
     gain2Slider.setRange(0.0,1.0,0.1);
     gain2Slider.setSliderStyle(juce::Slider::Rotary);
@@ -59,10 +59,10 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(gain2Slider);
     addAndMakeVisible(gain2Label);
     
-    freq2Label.setText("Freq 2 Index", juce::dontSendNotification);
+    freq2Label.setText("Osc 2 Freq Offset", juce::dontSendNotification);
     
-    freq2Slider.setRange(-250,250,1);
-    freq2Slider.setValue(0);
+    freq2Slider.setRange(-1.0,1.0,0.01);
+    freq2Slider.setValue(0.0);
     freq2Slider.setSliderStyle(juce::Slider::Rotary);
     freq2Slider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
     freq2Slider.addListener(this);
@@ -70,7 +70,7 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(freq2Slider);
     addAndMakeVisible(freq2Label);
     
-    gain3Label.setText("Gain 3 Index", juce::dontSendNotification);
+    gain3Label.setText("Oscillator 3 Gain", juce::dontSendNotification);
     
     gain3Slider.setRange(0.0,1.0,0.1);
     gain3Slider.setSliderStyle(juce::Slider::Rotary);
@@ -80,10 +80,10 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(gain3Slider);
     addAndMakeVisible(gain3Label);
     
-    freq3Label.setText("Freq 3 Index", juce::dontSendNotification);
+    freq3Label.setText("Osc 3 Freq Offset", juce::dontSendNotification);
     
-    freq3Slider.setRange(-250,250,1);
-    freq3Slider.setValue(0);
+    freq3Slider.setRange(-1.0,1.0,0.01);
+    freq3Slider.setValue(0.0);
     freq3Slider.setSliderStyle(juce::Slider::Rotary);
     freq3Slider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
     freq3Slider.addListener(this);
@@ -92,12 +92,12 @@ FM_SynthAudioProcessorEditor::FM_SynthAudioProcessorEditor (FM_SynthAudioProcess
     addAndMakeVisible(freq3Label);
 }
 
-FM_SynthAudioProcessorEditor::~FM_SynthAudioProcessorEditor()
+Add_synthAudioProcessorEditor::~Add_synthAudioProcessorEditor()
 {
 }
 
 //==============================================================================
-void FM_SynthAudioProcessorEditor::paint (juce::Graphics& g)
+void Add_synthAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
@@ -106,14 +106,14 @@ void FM_SynthAudioProcessorEditor::paint (juce::Graphics& g)
     g.setFont (15.0f);
 }
 
-void FM_SynthAudioProcessorEditor::resized()
+void Add_synthAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     
     
-    gainMIDILabel.setBounds(100,50,130,20);
-    gainMIDISlider.setBounds(100,80,100,100);
+    gainMIDILabel.setBounds(180,50,130,20);
+    gainMIDISlider.setBounds(200,80,100,100);
     
     gain1Label.setBounds(100,200,130,20);
     gain1Slider.setBounds(100,230,100,100);
@@ -134,7 +134,7 @@ void FM_SynthAudioProcessorEditor::resized()
     freq3Slider.setBounds(300,530,100,100);
 }
 
-void FM_SynthAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
+void Add_synthAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
     if (slider == &gainMIDISlider)
     {

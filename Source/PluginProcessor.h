@@ -20,12 +20,12 @@
 #define M_PI  (3.14159265)
 #endif
 
-class FM_SynthAudioProcessor  : public juce::AudioProcessor
+class Add_synthAudioProcessor  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
-    FM_SynthAudioProcessor();
-    ~FM_SynthAudioProcessor() override;
+    Add_synthAudioProcessor();
+    ~Add_synthAudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -88,9 +88,9 @@ private:
     
     float car_freq;
     
-    int freq1;
-    int freq2;
-    int freq3;
+    float freq1;
+    float freq2;
+    float freq3;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FM_SynthAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Add_synthAudioProcessor)
 };

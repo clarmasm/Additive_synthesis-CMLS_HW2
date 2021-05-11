@@ -14,11 +14,11 @@
 //==============================================================================
 /**
 */
-class FM_SynthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Slider::Listener
+class Add_synthAudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Slider::Listener
 {
 public:
-    FM_SynthAudioProcessorEditor (FM_SynthAudioProcessor&);
-    ~FM_SynthAudioProcessorEditor() override;
+    Add_synthAudioProcessorEditor (Add_synthAudioProcessor&);
+    ~Add_synthAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (juce::Graphics&) override;
@@ -27,7 +27,7 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    FM_SynthAudioProcessor& audioProcessor;
+    Add_synthAudioProcessor& audioProcessor;
     
     
     juce::Slider gainMIDISlider;
@@ -54,5 +54,5 @@ private:
     
     void sliderValueChanged( juce::Slider * slider) override;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FM_SynthAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Add_synthAudioProcessorEditor)
 };
