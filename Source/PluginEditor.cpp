@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "PluginEditor.h"
 
 //==============================================================================
 Add_synthAudioProcessorEditor::Add_synthAudioProcessorEditor (Add_synthAudioProcessor& p)
